@@ -558,6 +558,7 @@ models['LR']['hyperparams'] = {}
 models['LR']['hyperparams']['C'] = [100, 10, 1.0, 0.1, 0.01]
 models['LR']['hyperparams']['solvers'] = ['newton-cg', 'lbfgs', 'liblinear']
 
+
 #%%
 
 # example of grid searching key hyperparametres for logistic regression
