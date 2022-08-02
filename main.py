@@ -490,7 +490,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, RepeatedStratifiedKFold, StratifiedKFold
 from sklearn.metrics import accuracy_score, confusion_matrix,roc_curve, roc_auc_score, precision_score, recall_score, precision_recall_curve
 from sklearn.metrics import f1_score
-
+from sklearn.utils import shuffle
 # define model
 lr = LogisticRegression(random_state=seed, class_weight=None)
 accuracies=[]
@@ -544,6 +544,7 @@ def plot_cv_indices(cv, X, y, group, ax, n_splits, lw=10):
 fig, ax = plt.subplots()
 n_splits=8
 cv = StratifiedKFold(n_splits, shuffle=False)
+X_train_smote, y_train_smote = shuffle(X_train_smote, y_train_smote)
 plot_cv_indices(cv, X_train_smote, y_train_smote, y_train_smote, ax, n_splits)
 
 
