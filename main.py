@@ -18,6 +18,14 @@ from IPython.core.display import display
 from matplotlib.pyplot import cm
 import seaborn as sns
 
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 #%% LOAD DATASET
 
@@ -290,7 +298,7 @@ path_save_plots_numerical = r'C:\Users\andre\OneDrive\Documenti\DATA SCIENCE ENG
 
 #%%
 numerical_features = list(set(df.columns)-set(categorical_features))
-numerical_features.append('Revenue')
+numerical_features.append('Revenue') #aggiungo 'Revenue' in numerical features solo per fare la correlation matrix
 df_numerical = df[numerical_features]
 df_numerical.Revenue = df_numerical.Revenue.astype(int)
 #sns.pairplot(df_numerical, hue='Revenue', palette = 'Paired')
@@ -341,7 +349,10 @@ df.Month = sorted(df.Month, key=lambda x: pd.to_datetime(x, format="%b"))
 
 #%% DROP CORRELATED FEATURES TO REDUCE DATASET DIMENSIONALITY
 
-df = df.drop(columns=['BounceRates','Administrative_Duration', 'Informational_Duration','ProductRelated_Duration'], axis = 1)
+features_dropped = ['BounceRates','Administrative_Duration', 'Informational_Duration','ProductRelated_Duration']
+numerical_features = list(set(numerical_features)-set(features_dropped))
+numerical_features.remove('Revenue')
+df = df.drop(columns=features_dropped, axis = 1)
 # One hot encoding
 dummy_columns = ['OperatingSystems','Browser','Region','TrafficType','VisitorType', 'Weekend']
 
@@ -396,10 +407,30 @@ df = df.drop(columns = categorical_features[:-1]) #droppo tutte le categorical f
 #%% STANDADIZATION
 import sklearn
 from sklearn.preprocessing import StandardScaler
+
+
 ss = StandardScaler()
 
-scaled_df = ss.fit_transform(df)
 
+
+
+
+numerical_df = numerical_df[numerical_features]
+
+scaled_numerical_df =  pd.DataFrame(ss.fit_transform(numerical_df), columns=numerical_df.columns)
+
+categorical_features = list(set(df.columns)-set(numerical_features))
+scaled_df = pd.concat([df[categorical_features], scaled_numerical_df], axis=1)
+
+y = scaled_df['Revenue'].copy()
+X = scaled_df.drop('Revenue',axis=1)
+
+#Replace 0 values in categorical features with -1 to have mean = 0
+scaled_df[categorical_features] = scaled_df[categorical_features].mask(scaled_df[categorical_features] == 0, -1)
+
+# features_to_add = [e for e in numerical_features if e not in features_dropped]
+# scaled_df_categorical = df.drop(columns=features_to_add, axis=1)
+# scaled_df = pd.concat([scaled_numerical_df, scaled_df_categorical], axis = 1)
 #%% PCA
 from sklearn.decomposition import PCA
 PCA_df = PCA().fit(scaled_df)
@@ -421,7 +452,138 @@ X_pca = np.dot(scaled_df, PCA_df.components_[:n_comp,:].T)
 X_pca = pd.DataFrame(X_pca, columns=["PC%d" % (x + 1) for x in range(n_comp)])
 X_pca.shape
 
+
+#%% SMOTE TO BALANCE LABEL
+import imblearn
+from imblearn.over_sampling import SMOTE
+
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, RepeatedStratifiedKFold, StratifiedKFold
+
+seed = 13
+sm = SMOTE(random_state = seed)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=seed)
+
+X_train_smote, y_train_smote = sm.fit_sample(X_train, y_train.ravel())
+#pd.Series(y_train_smote).value_counts().plot.bar()
+y_train_smote = pd.Series(y_train_smote)
 #%% MODELS
+
+from sklearn.model_selection import (
+    KFold,
+    ShuffleSplit,
+    StratifiedKFold,
+    GroupShuffleSplit,
+    GroupKFold,
+    StratifiedShuffleSplit,
+    StratifiedGroupKFold,
+)
+rng = np.random.RandomState(1338)
+cmap_data = plt.cm.Paired
+cmap_cv = plt.cm.coolwarm
+n_splits = 4
+
+
+
+#%%
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, RepeatedStratifiedKFold, StratifiedKFold
+from sklearn.metrics import accuracy_score, confusion_matrix,roc_curve, roc_auc_score, precision_score, recall_score, precision_recall_curve
+from sklearn.metrics import f1_score
+
+# define model
+lr = LogisticRegression(random_state=seed, class_weight=None)
+accuracies=[]
+def plot_cv_indices(cv, X, y, group, ax, n_splits, lw=10):
+    """Create a sample plot for indices of a cross-validation object."""
+
+    # Generate the training/testing visualizations for each CV split
+    for ii, (tr, tt) in enumerate(cv.split(X=X, y=y, groups=group)):
+        # Fill in indices with the training/test groups
+        indices = np.array([np.nan] * len(X))
+        indices[tt] = 1
+        indices[tr] = 0
+        
+        lg1.fit(X.iloc[tr], y.iloc[tr])
+        y_pred = lg1.predict(X.iloc[tt])
+        
+        print(f'Accuracy Score: {accuracy_score(y.iloc[tt],y_pred)}')
+        accuracies.append(accuracy_score(y.iloc[tt],y_pred))
+        # Visualize the results
+        ax.scatter(
+            range(len(indices)),
+            [ii + 0.5] * len(indices),
+            c=indices,
+            marker="_",
+            lw=lw,
+            cmap=cmap_cv,
+            vmin=-0.2,
+            vmax=1.2,
+        )
+
+    # Plot the data classes and groups at the end
+    ax.scatter(
+        range(len(X)), [ii + 1.5] * len(X), c=y, marker="_", lw=lw, cmap=cmap_data
+    )
+
+
+    # Formatting
+    yticklabels = list(range(n_splits)) + ["class"]
+    ax.set(
+        yticks=np.arange(n_splits + 1) + 0.5,
+        yticklabels=yticklabels,
+        xlabel="Sample index",
+        ylabel="CV iteration",
+        ylim=[n_splits + 1.2, -0.2],
+        xlim=[0, X.shape[0]],
+    )
+    ax.set_title("{}".format(type(cv).__name__), fontsize=15)
+    return ax
+
+
+fig, ax = plt.subplots()
+n_splits=8
+cv = StratifiedKFold(n_splits, shuffle=False)
+plot_cv_indices(cv, X_train_smote, y_train_smote, y_train_smote, ax, n_splits)
+
+
+
+#%% MODELS HYPERPARAMETERS
+
+models = {}
+models['LR'] = {}
+models['LR']['hyperparams'] = {}
+
+models['LR']['hyperparams']['C'] = [100, 10, 1.0, 0.1, 0.01]
+models['LR']['hyperparams']['solvers'] = ['newton-cg', 'lbfgs', 'liblinear']
+
+#%%
+
+# example of grid searching key hyperparametres for logistic regression
+from sklearn.datasets import make_blobs
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+
+# define models and parameters
+model = LogisticRegression()
+solvers = ['newton-cg', 'lbfgs', 'liblinear']
+penalty = ['l2']
+c_values = [100, 10, 1.0, 0.1, 0.01]
+
+# define grid search
+grid = dict(solver=solvers,penalty=penalty,C=c_values)
+#cv = RepeatedStratifiedKFold(n_splits=8, n_repeats=3, random_state=1)
+grid_search = GridSearchCV(estimator=model, param_grid=grid, n_jobs=-1, cv=cv, scoring='accuracy',error_score=0)
+grid_result = grid_search.fit(X_train_smote, y_train_smote)
+# summarize results
+print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+means = grid_result.cv_results_['mean_test_score']
+stds = grid_result.cv_results_['std_test_score']
+params = grid_result.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
+
 
 #%% LOGISTIC REGRESSION
 
@@ -434,17 +596,12 @@ from sklearn.metrics import f1_score
 seed = 13
 
 # split dataset into x,y
-x = df.drop('Revenue',axis=1)
-y = df['Revenue']
+x = scaled_df.drop('Revenue',axis=1)
+y = scaled_df['Revenue']
 # train-test split
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=seed)
 pd.Series(y_train).value_counts().plot.bar()
-#%% SMOTE TO BALANCE LABEL
-import imblearn
-from imblearn.over_sampling import SMOTE
-sm = SMOTE(random_state = seed)
-X_train_new, y_train_new = sm.fit_sample(X_train, y_train.ravel())
-pd.Series(y_train_new).value_counts().plot.bar()
+
 #%%
 
 # define model
@@ -458,3 +615,77 @@ print(f'Accuracy Score: {accuracy_score(y_test,y_pred)}')
 print(f'Confusion Matrix: \n{confusion_matrix(y_test, y_pred)}')
 print(f'Area Under Curve: {roc_auc_score(y_test, y_pred)}')
 print(f'Recall score: {recall_score(y_test,y_pred)}')
+
+#%%
+nbm = GaussianNB()
+nbm.fit(X_train,y_train)
+nbm_pred = nbm.predict(X_test)
+
+print('Gaussian Naive Bayes Performance:')
+print('---------------------------------')
+print('Accuracy        : ', accuracy_score(y_test, nbm_pred))
+print('F1 Score        : ', f1_score(y_test, nbm_pred))
+print('Precision       : ', precision_score(y_test, nbm_pred))
+print('Recall          : ', recall_score(y_test, nbm_pred))
+print('Confusion Matrix:\n ', confusion_matrix(y_test, nbm_pred))
+#%%
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+# 5 folds selected
+kfold = KFold(n_splits=10, random_state=0, shuffle=True)
+model = LogisticRegression(solver='liblinear')
+results = cross_val_score(model, X_train, y_train, cv=kfold)
+# Output the accuracy. Calculate the mean and std across all folds. 
+print(f"Accuracy - mean : {results.mean()*100.0:.3f}, std: {results.std()*100:.3f}")
+
+
+
+#%%
+
+models = {}
+#models['LR'] 
+
+
+
+lrm_param_grid = {'C': [0.01, 0.1, 1, 10, 100],  
+              'solver': ['newton-cg', 'lbfgs', 'sag', 'saga']} 
+lrm_grid = GridSearchCV(LogisticRegression(),
+                        lrm_param_grid,
+                        refit=True,
+                        verbose=3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
