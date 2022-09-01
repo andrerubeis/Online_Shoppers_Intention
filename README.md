@@ -16,7 +16,9 @@ The class label *Revenue* is imbalanced so different resampling techniques has b
 * **Both** (oversampling + undersampling): SMOTE + TomekLinks
 
 ## Results
-Below are reported the auROCs for each scenario and classifier with and without PCA, if interested in other metrics please have a look in final_final_project_MML_3
+Below are reported the auROCs for each scenario and classifier with and without PCA, if interested in other metrics please have a look
+in final_final_project_MML_3
+
 ![](images/auroc_no_PCA_3.png)
 
 ![](images/auroc_PCA_3.png)
