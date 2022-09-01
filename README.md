@@ -16,6 +16,6 @@ The class label *Revenue* is imbalanced so different resampling techniques has b
 * **Both** (oversampling + undersampling): SMOTE + TomekLinks
 
 ## Results
-![](images/auroc_no_PCA_2.png)
+![](images/auroc_no_PCA_3.png)
 
-![](images/auroc_PCA_2.png)
+![](images/auroc_PCA_3.png)
