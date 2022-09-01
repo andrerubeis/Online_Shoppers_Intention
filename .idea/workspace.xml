@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3192815e-b2c1-4dae-9dc5-fd54dc2e1f9e" name="Default Changelist" comment="shuffle, cross validation and gridsearch LR">
+      <change afterPath="$PROJECT_DIR$/Online Shoppers Colab.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.spyproject/config/backups/workspace.ini.bak" beforeDir="false" afterPath="$PROJECT_DIR$/.spyproject/config/backups/workspace.ini.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.spyproject/config/workspace.ini" beforeDir="false" afterPath="$PROJECT_DIR$/.spyproject/config/workspace.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="bc804ffc-ff5e-4101-b09b-773711f90430">
+    <option name="files">
+      <option value="main.ipynb" />
+    </option>
+  </component>
+  <component name="ProjectId" id="2CTloFXaXE6R9FcMvP5SZWnZ7dR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\andre\OneDrive\Documenti\GitHub\Online Shoppers Intention" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3192815e-b2c1-4dae-9dc5-fd54dc2e1f9e" name="Default Changelist" comment="" />
+      <created>1658834629320</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1658834629320</updated>
+      <workItem from="1658834630418" duration="2664000" />
+      <workItem from="1658955742282" duration="1982000" />
+      <workItem from="1659012008788" duration="4526000" />
+      <workItem from="1659205328384" duration="4185000" />
+      <workItem from="1659254651979" duration="14800000" />
+      <workItem from="1659449080440" duration="603000" />
+      <workItem from="1659693216498" duration="597000" />
+      <workItem from="1659706787790" duration="2339000" />
+      <workItem from="1659714025771" duration="8350000" />
+      <workItem from="1659949849077" duration="594000" />
+      <workItem from="1659993742981" duration="494000" />
+      <workItem from="1660034803242" duration="4747000" />
+    </task>
+    <task id="LOCAL-00001" summary="change descriptions of matrixes">
+      <created>1659255414979</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1659255414979</updated>
+    </task>
+    <task id="LOCAL-00002" summary="change descriptions of matrixes">
+      <created>1659255944963</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659255944963</updated>
+    </task>
+    <task id="LOCAL-00003" summary="change descriptions of matrixes">
+      <created>1659256085228</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1659256085228</updated>
+    </task>
+    <task id="LOCAL-00004" summary="cross validation and gridsearch LR">
+      <created>1659449125417</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659449125417</updated>
+    </task>
+    <task id="LOCAL-00005" summary="cross validation and gridsearch LR">
+      <created>1659450275467</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659450275467</updated>
+    </task>
+    <task id="LOCAL-00006" summary="shuffle, cross validation and gridsearch LR">
+      <created>1659450297690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659450297690</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change descriptions of matrixes" />
+    <MESSAGE value="cross validation and gridsearch LR" />
+    <MESSAGE value="shuffle, cross validation and gridsearch LR" />
+    <option name="LAST_COMMIT_MESSAGE" value="shuffle, cross validation and gridsearch LR" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="190" key="FileChooserDialogImpl" timestamp="1658834834395">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="549" y="190" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1658834834395" />
+    <state x="607" y="335" key="Github.ShareDialog" timestamp="1659206247596">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="607" y="335" key="Github.ShareDialog/0.0.1536.864@0.0.1536.864" timestamp="1659206247596" />
+    <state x="501" y="137" key="Github.UntrackedFilesDialog" timestamp="1659206276258">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="501" y="137" key="Github.UntrackedFilesDialog/0.0.1536.864@0.0.1536.864" timestamp="1659206276258" />
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1659707523658">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1659707523658" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1659707523658">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1659707523658" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1659707523657">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1659707523657" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1659707523658">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1659707523658" />
+    <state x="279" y="78" key="SettingsEditor" timestamp="1659288421853">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="279" y="78" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1659288421853" />
+    <state x="361" y="168" key="Vcs.Push.Dialog.v2" timestamp="1659450300720">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="168" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1659450300720" />
+  </component>
+</project>
